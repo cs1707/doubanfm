@@ -36,8 +36,11 @@ class App extends Component {
     const { play, pause, end, skip, login} = this;
     return (
       <div>
-        <Channels channels= {channels} changeChannel={this.changeChannel}/>
-        <Login {...{login}}/>
+        { false && (<div>
+          <Channels channels= {channels} changeChannel={this.changeChannel}/>
+          <Login {...{login}}/>
+        </div>)
+        }
         {song.url && <Player {
           ...{
             song,

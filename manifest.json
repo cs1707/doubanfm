@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "豆瓣FM",
+    "description": "豆瓣FM",
+    "version": "0.9.1",
+    "app": {
+        "background": {
+            "scripts": [
+                "background.js"
+            ]
+        }
+    },
+    "icons": {
+        "16": "img/logo16.png",
+        "48": "img/logo48.png",
+        "128": "img/logo128.png"
+    },
+    "permissions": [
+        "webview",
+        "<all_urls>"
+    ]
+}
