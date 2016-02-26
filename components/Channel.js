@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 
 export default class Channel extends Component {
   render() {
-    let { channel } = this.props;
+    let { channel } = this.props
     return (
       <span onClick={ e => {
         this.props.changeChannel(channel.channel_id);

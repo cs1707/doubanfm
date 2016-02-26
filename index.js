@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import App from './containers/App.js';
-import configureStore from './store/configureStore.js';
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import App from './containers/App.js'
+import configureStore from './store/configureStore.js'
 
 const store = configureStore();
 
-React.render(
+render(
   <Provider store={store}>
-    { ()=> <App />}
+    <App />
   </Provider>
 , document.body);
