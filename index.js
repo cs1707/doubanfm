@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import App from './containers/App.js'
+import App from './containers/Player.js'
 import configureStore from './store/configureStore.js'
 
 const store = configureStore();
@@ -9,5 +9,4 @@ const store = configureStore();
 render(
   <Provider store={store}>
     <App />
-  </Provider>
-, document.body);
+  </Provider>, document.querySelector('#app'));

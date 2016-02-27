@@ -59,10 +59,10 @@ body {
 .btn-like {
   background-image: url(/assets/images/heart.svg);
 }
-.btn-like.active {
+.btn-like-active {
   background-image: url(/assets/images/heart-red.svg);
 }
-.btn-dislike {
+.btn-byb {
   background-image: url(/assets/images/trash.svg);
 }
 .btn-next {

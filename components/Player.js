@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import Progress from './Progress.js';
 import Blobimg from './Blobimg.js';
-import { PLAY, PAUSE, NEXT } from '../constant/index.js';
+import { PLAY, PAUSE } from '../constant/index.js';
 
 export default class Player extends Component {
   constructor() {
@@ -16,13 +16,18 @@ export default class Player extends Component {
   }
 
   render() {
-    const { song, play, pause, skip, end } = this.props;
+    const { song, handle, play, pause } = this.props;
+    if(!song) {
+      handle('new')
+      return <div></div>
+    }
     let {
       picture,
       artist,
       album,
       albumtitle,
-      title
+      title,
+      like
     } = song;
 
     function getUrl(url){
@@ -49,10 +54,20 @@ export default class Player extends Component {
             {this.state.currentTime}
           </div>
           <div className="player-control">
-            <span className={ 'btn ' + (this.state.isPlay ? 'btn-pause' :  'btn-play')} onClick={ this.state.isPlay ? pause : play }></span>
-            <span className="btn btn-like" onClick={this.rate}></span>
-            <span className="btn btn-dislike" onClick={this.bye}></span>
-            <span className="btn btn-next" onClick={skip}></span>
+            <span className={ 'btn ' + (this.state.isPlay ? 'btn-pause' : 'btn-play')} onClick={this.state.isPlay ? pause : play }></span>
+            <span className={'btn ' + (like ? 'btn-like-active' : 'btn-like')} onClick={() => {
+              if(like) {
+                handle('unrate')
+              } else {
+                handle('rate')
+              }
+            }}></span>
+            <span className="btn btn-byb" onClick={() => {
+              handle('byb')
+            }}></span>
+            <span className="btn btn-next" onClick={() => {
+              handle('skip')
+            }}></span>
           </div>
          </div>
       </div>
@@ -61,12 +76,11 @@ export default class Player extends Component {
 
   componentDidMount() {
     let { audio } = this;
-    let { song, control } = this.props;
+    let { song, handle } = this.props;
     audio.addEventListener('timeupdate', this.updateProgress.bind(this));
     audio.addEventListener('playing', this.onPlay.bind(this));
     audio.addEventListener('pause', this.onPause.bind(this));
-    audio.addEventListener('error', this.skip.bind(this));
-    audio.addEventListener('ended', this.end.bind(this));
+    audio.addEventListener('ended', () => { handle('end')})
     if(song && song.url && song.control === PLAY) {
       audio.src = song.url;
       audio.play();
@@ -74,13 +88,13 @@ export default class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { audio } = this;
-    if(nextProps.song.control === PLAY) {
-      if(!this.props.song || this.props.song.url !== nextProps.song.url) {
+    let { audio } = this
+    if(nextProps.control === PLAY) {
+      if(audio.src !== nextProps.song.url) {
         audio.src = nextProps.song.url;
       }
       audio.play();
-    } else if(nextProps.song.control === PAUSE) {
+    } else if(nextProps.control === PAUSE) {
       audio.pause();
     }
   }
@@ -106,57 +120,4 @@ export default class Player extends Component {
        currentTime
     });
   }
-
-  playNext() {
-    this.props.playNext();
-  }
-
-  play() {
-    this.props.play();
-  }
-
-  pause() {
-    this.props.pause();
-  }
-
-  end() {
-    console.log(end);
-    this.props.end();
-  }
-
-  skip() {
-    this.props.skip();
-  }
-
-  end() {
-    this.props.end();
-  }
-
-  like() {
-    // id
-    this.props.like();
-  }
-
-  dislike() {
-    // id
-    this.props.dislike();
-  }
-
-  trash() {
-    // id
-    this.props.trash();
-  }
 }
-
-Player.propTypes = {
-  playNext: PropTypes.func.isRequired,
-  play: PropTypes.func.isRequired,
-  pause: PropTypes.func.isRequired,
-  like: PropTypes.func.isRequired,
-  dislike: PropTypes.func.isRequired,
-  trash: PropTypes.func.isRequired,
-  song: PropTypes.object.isRequired,
-  control: PropTypes.oneOf(PLAY, PAUSE, NEXT).isRequired
-}
-
-
