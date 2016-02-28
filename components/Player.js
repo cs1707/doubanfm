@@ -16,10 +16,9 @@ export default class Player extends Component {
   }
 
   render() {
-    const { song, handle, play, pause } = this.props;
+    const { song, handle, play, pause, toggleChannelsShow } = this.props;
     if(!song) {
-      handle('new')
-      return <div></div>
+      return <div/>
     }
     let {
       picture,
@@ -43,7 +42,7 @@ export default class Player extends Component {
           <Blobimg className="player-picture" src={picture} />
         </a>
         <div className="player-main">
-          <div className="text-right"><span className="btn btn-hz"></span></div>
+          <div className="text-right"><span className="btn btn-hz" onClick={toggleChannelsShow}></span></div>
           <div className="player-info">
             <div className="artist">{artist}</div>
             <div className="album">{albumtitle}</div>
@@ -87,6 +86,13 @@ export default class Player extends Component {
     }
   }
 
+  componentWillUnmount() {
+    audio.removeEventListener('timeupdate', this.updateProgress.bind(this));
+    audio.removeEventListener('playing', this.onPlay.bind(this));
+    audio.removeEventListener('pause', this.onPause.bind(this));
+    audio.removeEventListener('ended', () => { handle('end')})
+  }
+
   componentWillReceiveProps(nextProps) {
     let { audio } = this
     if(nextProps.control === PLAY) {
@@ -120,4 +126,13 @@ export default class Player extends Component {
        currentTime
     });
   }
+}
+
+
+Player.PropTypes = {
+  song: PropTypes.object.isRequired,
+  control: PropTypes.string.isRequired,
+  handle: PropTypes.func.isRequired,
+  play: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
 }

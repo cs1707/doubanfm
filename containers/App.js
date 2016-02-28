@@ -1,91 +1,39 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { asyncPlay, pause, asyncSkip, asyncEnd, asyncLogin, asyncChannels, asyncChangeChannel } from '../actions/action.js';
-import Player from '../components/Player.js';
-import Login from '../components/Login.js';
-import Channels from '../components/Channels.js';
+import React, { Component } from 'react'
+import Channels from './Channels'
+import Player from './Player'
+
+import { connect } from 'react-redux'
+import { asyncControl } from '../actions/player'
+import { fetchChannels } from '../actions/channels'
+
 
 class App extends Component {
-  constructor() {
-    super();
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-    this.skip = this.skip.bind(this);
-    this.end = this.end.bind(this);
-    this.login = this.login.bind(this);
-    this.changeChannel = this.changeChannel.bind(this);
+  constructor(props) {
+    super(props)
   }
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(asyncPlay());
-    dispatch(asyncChannels());
+
+  componentWillMount() {
+    let { init } = this.props
+    init()
   }
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
+
   render() {
-    const {
-      player:{
-        current: song
-      },
-      channel: {
-        channels
-      }
-    } = this.props;
-    console.log(this.props);
-    const { play, pause, end, skip, login} = this;
     return (
       <div>
-        { false && (<div>
-          <Channels channels= {channels} changeChannel={this.changeChannel}/>
-          <Login {...{login}}/>
-        </div>)
-        }
-        {song.url && <Player {
-          ...{
-            song,
-            play,
-            skip,
-            pause,
-            end,
-          }
-        }/> || ''}
+        <Channels />
+        <Player />
       </div>
     )
   }
+}
 
-  login(obj) {
-     this.props.dispatch(asyncLogin(obj));
-  }
-
-  play() {
-    this.props.dispatch(asyncPlay());
-  }
-
-  pause() {
-    this.props.dispatch(pause());
-  }
-
-  skip() {
-    this.props.dispatch(asyncSkip());
-  }
-
-  end() {
-    this.props.dispatch(asyncEnd());
-  }
-
-  changeChannel(channelId) {
-    this.props.dispatch(asyncChangeChannel(channelId));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    init() {
+      dispatch(asyncControl('new'))
+      dispatch(fetchChannels())
+    }
   }
 }
 
-App.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  songs: PropTypes.array.isRequired,
-  current: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-  return state;
-}
-export default connect(mapStateToProps)(App);
+export default connect(null, mapDispatchToProps)(App)

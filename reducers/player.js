@@ -29,7 +29,7 @@ function player(state = {
     case TOGGLE_RATE:
       return Object.assign({}, state, { playlist: [
         Object.assign({}, playlist[0], { like: !action.like }),
-        ...playlist
+        ...action.playlist
       ]})
     default:
       return state

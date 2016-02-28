@@ -1,8 +1,7 @@
 import {
   RECEIVE_CHANNELS,
   CHANGE_CHANNEL,
-  SHOW_CHANNELS,
-  HIDE_CHANNELS
+  TOGGLE_CHANNELS_SHOW
 } from '../constant'
 
 function channels(state = {
@@ -14,21 +13,17 @@ function channels(state = {
     case RECEIVE_CHANNELS:
       return Object.assign({}, state, {
         list: action.list
-      });
+      })
     case CHANGE_CHANNEL:
       return Object.assign({}, state, {
-        id: action.id
-      });
-    case SHOW_CHANNELS:
+        current: action.current
+      })
+    case TOGGLE_CHANNELS_SHOW:
       return Object.assign({}, state, {
-        visible: true
-      });
-    case HIDE_CHANNELS:
-      return Object.assign({}, state, {
-        visible: false
-      });
+        visible: !state.visible
+      })
     default:
-      return state;
+      return state
   }
 }
 

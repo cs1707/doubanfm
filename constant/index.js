@@ -5,11 +5,8 @@ export const PLAYING = 'PLAYING'
 export const END = 'END'
 export const TOGGLE_RATE = 'TOGGLE_RATE'
 
-export const RECEIVE_PLAYLIST = 'RECEIVE_LIST'
-
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS'
-export const SHOW_CHANNELS = 'SHOW_CHANNELS'
-export const HIDE_CHANNELS = 'HIDE_CHANNELS'
+export const TOGGLE_CHANNELS_SHOW = 'TOGGLE_CHANNELS_SHOW'
 export const CHANGE_CHANNEL = 'CHANGE_CHANNEL'
 
 export const SHOW_LOGIN = 'SHOW_LOGIN'

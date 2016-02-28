@@ -1,6 +1,7 @@
 body {
   color: #333;
   line-height: 1.2;
+  font-family:'Helvetica Neue', Helvetica, 'Lucida Grande', Arial, 'Hiragino Sans GB', 微软雅黑, 'WenQuanYi Micro Hei', STHeiti, SimSun, sans-serif;
 }
 .clearfix {
   clear:both;
@@ -122,4 +123,39 @@ body {
 
 .hidden {
   display: none;
+}
+#app {
+  position: relative;
+}
+.channels {
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.channel, .channel-close {
+  display: inline-block;
+  margin: 3px 6px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.channel-close {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+  color: #fff;
+}
+.channel.active {
+  background-color: #30A080;
+  color: #fff;
+  border-color: #30A080;
 }

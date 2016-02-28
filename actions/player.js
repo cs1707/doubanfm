@@ -95,9 +95,11 @@ function asyncControl(type) {
         })
         break
       case 'end':
-        xhr()
         dispatch(end())
-        dispatch(asyncControl('playing'))
+        xhr().then(function({song}){
+          dispatch(playing(song))
+          dispatch(asyncControl('playing'))
+        })
         break
       case 'playing':
         if(playlist.length === 0) {

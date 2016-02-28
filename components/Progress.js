@@ -13,4 +13,4 @@ export default class Progress extends Component {
 
 Progress.propTypes = {
   now: PropTypes.string.isRequired
-};
+}
