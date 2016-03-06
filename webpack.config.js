@@ -23,7 +23,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: [ 'babel' ],
         exclude: /node_modules/,
         include: __dirname
@@ -45,7 +45,7 @@ if (fs.existsSync(reduxSrc) && fs.existsSync(reduxNodeModules)) {
   process.env.BABEL_ENV = 'commonjs'
   // Compile Redux from source
   module.exports.module.loaders.push({
-    test: /\.js$/,
+    test: /\.jsx?$/,
     loaders: [ 'babel' ],
     include: reduxSrc
   })

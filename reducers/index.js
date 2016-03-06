@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import player from './player'
 import channels from './channels'
-import user from './user'
+import login from './login'
 
 let reducer = combineReducers({
   player,
   channels,
-  user
+  user: login
 });
 
 export default reducer;

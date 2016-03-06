@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Channels from './Channels'
 import Player from './Player'
+import Login from './Login'
 
 import { connect } from 'react-redux'
 import { asyncControl } from '../actions/player'
@@ -20,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Login />
         <Channels />
         <Player />
       </div>

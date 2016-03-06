@@ -7,6 +7,8 @@ import {
   TOGGLE_RATE
 } from '../constant'
 
+import { $param } from '../utils'
+
 function play() {
   return {
     type: PLAY
@@ -71,16 +73,27 @@ function asyncControl(type) {
           player: {
             control,
             playlist
-          }
+          },
+          user
         } = getState()
+    console.log(getState())
 
     let [current] = playlist
 
-    let xhr = () => fetchPlaylist({
+    let loginInfo = {}
+    if(user.data.r === 0) {
+      loginInfo = {
+        user_id: user.data.user_id,
+        expire: user.data.expire,
+        token: user.data.token
+      }
+    }
+
+    let xhr = () => fetchPlaylist(Object.assign({
       type: typeMap[type],
       channel: channelId,
-      sid: current && current.sid
-    })
+      sid: current && current.sid,
+    }, loginInfo))
 
     switch(type) {
       case 'new':
@@ -122,22 +135,12 @@ function asyncControl(type) {
   }
 }
 
-function $param(obj) {
-  let s = [];
-  for(let key in obj) {
-    if(obj[key] != null) {
-      s.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
-    }
-  }
-  return '?' + s.join('&');
-}
-
 function fetchPlaylist(params) {
     let query = Object.assign({
       app_name: 'radio_android',
       version: 100
     }, params);
-    return fetch('http://www.douban.com/j/app/radio/people' + $param(query))
+    return fetch('http://www.douban.com/j/app/radio/people?' + $param(query))
       .then(response => response.json());
 }
 

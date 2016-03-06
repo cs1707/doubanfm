@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handle(type){
+    handle(type) {
       dispatch(asyncControl(type))
     },
 
