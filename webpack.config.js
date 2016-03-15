@@ -1,52 +1,64 @@
-var path = require('path')
+var rucksack = require('rucksack-css')
 var webpack = require('webpack')
+var path = require('path')
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './index'
-  ],
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/dist/'
+  context: path.join(__dirname, './client'),
+  entry: {
+    jsx: './index.js',
+    html: './index.html',
+    vendor: ['react']
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
-  ],
+  output: {
+    path: path.join(__dirname, './static'),
+    filename: 'bundle.js',
+  },
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        loaders: [ 'babel' ],
+        test: /\.html$/,
+        loader: 'file?name=[name].[ext]'
+      },
+      {
+        test: /\.css$/,
+        include: /client/,
+        loaders: [
+          'style-loader',
+          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        exclude: /client/,
+        loader: 'style!css'
+      },
+      {
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        include: __dirname
-      }
-    ]
+        loaders: [
+          'react-hot',
+          'babel-loader'
+        ]
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  postcss: [
+    rucksack({
+      autoprefixer: true
+    })
+  ],
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+    })
+  ],
+  devServer: {
+    contentBase: './client',
+    hot: true
   }
-}
-
-
-// When inside Redux repo, prefer src to compiled version.
-// You can safely delete these lines in your project.
-var reduxSrc = path.join(__dirname, '..', '..', 'src')
-var reduxNodeModules = path.join(__dirname, '..', '..', 'node_modules')
-var fs = require('fs')
-if (fs.existsSync(reduxSrc) && fs.existsSync(reduxNodeModules)) {
-  // Resolve Redux to source
-  module.exports.resolve = { alias: { 'redux': reduxSrc } }
-  // Our root .babelrc needs this flag for CommonJS output
-  process.env.BABEL_ENV = 'commonjs'
-  // Compile Redux from source
-  module.exports.module.loaders.push({
-    test: /\.jsx?$/,
-    loaders: [ 'babel' ],
-    include: reduxSrc
-  })
 }
