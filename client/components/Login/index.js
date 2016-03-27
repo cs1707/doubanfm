@@ -6,8 +6,9 @@ export default class Login extends Component {
     this.login = this.login.bind(this);
   }
   render() {
+    let { visible } = this.props.user
     return (
-      <form className="form-login">
+      <form onSubmit={this.login} className={'form-login ' + (visible ? '':'hidden')} >
         <div className="form-group">
           <input className="form-control" type="text" ref="email" placeholder="邮箱"/>
         </div>
@@ -15,17 +16,18 @@ export default class Login extends Component {
           <input className="form-control" type="password" ref="password" placeholder="密码"/>
         </div>
         <div className="form-group">
-          <button className="btn-login" onClick={this.login}>登录</button>
+          <button className="btn-login" type="submit">登录</button>
         </div>
       </form>
     )
   }
 
-  login() {
-    let email = this.refs.email.getDOMNode().value;
-    let password = this.refs.password.getDOMNode().value;
+  login(e) {
+    e.preventDefault()
+    let email = this.refs.email.value
+    let password = this.refs.password.value
     if(!email || !password) {
-      return;
+      return
     }
     this.props.submitLogin(
       email,

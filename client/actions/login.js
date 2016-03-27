@@ -20,6 +20,12 @@ function loginEnd(data) {
   }
 }
 
+export function toggleLoginShow() {
+  return {
+    type: TOGGLE_LOGIN_SHOW
+  }
+}
+
 export function submitLogin(email, password) {
   return (dispatch, getState) => {
     let query = {
@@ -39,7 +45,12 @@ export function submitLogin(email, password) {
         body: $param(query)
       })
       .then(response => response.json())
-      .then(json => dispatch(loginEnd(json)))
+      .then(json => {
+          dispatch(loginEnd(json))
+          if(json.r === 0) {
+            dispatch(toggleLoginShow())
+          }
+        })
       .catch(json => dispatch(loginEnd(json)))
 
     }

@@ -18,7 +18,7 @@ export default function login(state = {
         data: action.data
       })
     case TOGGLE_LOGIN_SHOW:
-      return Object.assign({}, state, { visible: true })
+      return Object.assign({}, state, { visible: !state.visible })
     default:
       return state;
   }

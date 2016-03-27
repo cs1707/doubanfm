@@ -49,25 +49,25 @@ body {
 .btn-hz {
   margin-right: 8px;
   margin-top: 6px;
-  background-image: url(/assets/images/hz.svg);
+  background-image: url(./images/hz.svg);
 }
 .btn-play {
-  background-image: url(/assets/images/play.svg);
+  background-image: url(./images/play.svg);
 }
 .btn-pause {
-  background-image: url(/assets/images/pause.svg);
+  background-image: url(./images/pause.svg);
 }
 .btn-like {
-  background-image: url(/assets/images/heart.svg);
+  background-image: url(./images/heart.svg);
 }
 .btn-like-active {
-  background-image: url(/assets/images/heart-red.svg);
+  background-image: url(./images/heart-red.svg);
 }
 .btn-byb {
-  background-image: url(/assets/images/trash.svg);
+  background-image: url(./images/trash.svg);
 }
 .btn-next {
-  background-image: url(/assets/images/next.svg);
+  background-image: url(./images/next.svg);
 }
 .player-control .btn {
   width: 40px;
@@ -123,7 +123,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 #app {
   position: relative;
@@ -224,6 +224,6 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #fff;
+  background-color: rgba(1,1,1,.75);
   align-items: center;
 }

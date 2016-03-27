@@ -16,7 +16,7 @@ export default class Player extends Component {
   }
 
   render() {
-    const { song, handle, play, pause, toggleChannelsShow } = this.props;
+    const { song, handle, play, pause, toggleChannelsShow, toggleLoginShow } = this.props;
     if(!song) {
       return <div/>
     }
@@ -42,7 +42,7 @@ export default class Player extends Component {
           <Blobimg className="player-picture" src={picture} />
         </a>
         <div className="player-main">
-          <div className="text-right"><span className="btn btn-hz" onClick={toggleChannelsShow}></span></div>
+          <div className="text-right"><span onClick={toggleLoginShow} className="btn btn-hz"></span><span className="btn btn-hz" onClick={toggleChannelsShow}></span></div>
           <div className="player-info">
             <div className="artist">{artist}</div>
             <div className="album">{albumtitle}</div>

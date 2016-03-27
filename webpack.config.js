@@ -24,7 +24,8 @@ module.exports = {
         include: /client/,
         loaders: [
           'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          // 'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'css-loader',
           'postcss-loader'
         ]
       },
@@ -41,6 +42,10 @@ module.exports = {
           'babel-loader'
         ]
       },
+      {
+        test: /\.svg$/,
+        loader: 'url?limit=8192!svgo'
+      }
     ],
   },
   resolve: {

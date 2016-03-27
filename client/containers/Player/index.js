@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import Player from '../../components/Player'
 import { asyncControl, play, pause } from '../../actions/player'
 import { toggleChannelsShow } from '../../actions/channels'
+import { toggleLoginShow } from '../../actions/login'
 
 const mapStateToProps = (state) => {
   return {
@@ -26,6 +27,10 @@ const mapDispatchToProps = (dispatch) => {
 
     toggleChannelsShow() {
       dispatch(toggleChannelsShow())
+    },
+
+    toggleLoginShow() {
+      dispatch(toggleLoginShow())
     }
   }
 }
